@@ -2,12 +2,13 @@
     <string name="app_name">Guessing Game</string>
     <string name="guess_a_letter">Guess a letter</string>
     <string name="guess">Guess</string>
-    <string name="lives_remain">You have %1$d lives left</string>
-    <string name="incorrect_guesses">Incorrect guesses: %1$s</string>
+    <string name="lives_remain">You have %d lives left</string>
+    <string name="incorrect_guesses">Incorrect guesses: %s</string>
     <string name="you_won">You won!</string>
     <string name="you_lost">You lost!</string>
-    <string name="word_was">The word was: %1$s</string>
+    <string name="word_was">The word was</string>
     <string name="make_guess">Guess is empty! Make a guess!</string>
     <string name="one_letter">Only one letter allowed!</string>
     <string name="start_new_game">Start new game!</string>
+    <string name="already_guessed">You already guessed this letter, make another choice</string>
 </resources>
