@@ -44,6 +44,13 @@ open class GameFragment : Fragment() {
             binding.incorrectGuesses.text = getString(R.string.incorrect_guesses, it)
         }
 
+        viewModel.gameOver.observe(viewLifecycleOwner) {
+            if (it) {
+                val action = GameFragmentDirections
+                    .actionGameFragmentToResultFragment(viewModel.wonLostMessage())
+                view.findNavController().navigate(action)
+            }
+        }
         binding.guessButton.setOnClickListener {
             if (binding.guess.text.trim().isEmpty()) {
                 Toast.makeText(activity, getString(R.string.make_guess), Toast.LENGTH_LONG).show()
@@ -62,11 +69,6 @@ open class GameFragment : Fragment() {
             viewModel.makeGuess(binding.guess.text.toString().uppercase())
             binding.guess.text.clear()
 
-            if (viewModel.isWon() || viewModel.isLost()) {
-                val action = GameFragmentDirections
-                    .actionGameFragmentToResultFragment(viewModel.wonLostMessage())
-                view.findNavController().navigate(action)
-            }
         }
     }
         return view
