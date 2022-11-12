@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import android.widget.Toast.makeText
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.akrio.guessinggame.databinding.FragmentGameBinding
@@ -30,13 +30,30 @@ open class GameFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[GameViewModel::class.java]
 
-        updateScreen()
+
+
+        viewModel.livesLeft.observe(viewLifecycleOwner, Observer { newValue ->
+            binding.lives.text = getString(R.string.lives_remain, newValue)
+        })
+
+        viewModel.secretWordDisplay.observe(viewLifecycleOwner, Observer { newValue ->
+            binding.word.text = newValue
+        })
+
+        viewModel.incorrectGuesses.observe(viewLifecycleOwner) {
+            binding.incorrectGuesses.text = getString(R.string.incorrect_guesses, it)
+        }
 
         binding.guessButton.setOnClickListener {
             if (binding.guess.text.trim().isEmpty()) {
                 Toast.makeText(activity, getString(R.string.make_guess), Toast.LENGTH_LONG).show()
-            } else if (binding.guess.text.toString().uppercase() in viewModel.incorrectGuesses){
-                Snackbar.make(binding.guessButton, getString(R.string.already_guessed), Snackbar.LENGTH_LONG)
+            } else if (viewModel.incorrectGuesses.value
+                    .toString()
+                    .contains(binding.guess.text.toString()
+                    .uppercase())){
+                Snackbar.make(binding.guessButton,
+                    getString(R.string.already_guessed),
+                    Snackbar.LENGTH_LONG)
                     .setAction("UNDO"){
                         binding.guess.text.clear()
                     }
@@ -44,7 +61,7 @@ open class GameFragment : Fragment() {
                 } else {
             viewModel.makeGuess(binding.guess.text.toString().uppercase())
             binding.guess.text.clear()
-            updateScreen()
+
             if (viewModel.isWon() || viewModel.isLost()) {
                 val action = GameFragmentDirections
                     .actionGameFragmentToResultFragment(viewModel.wonLostMessage())
@@ -52,7 +69,6 @@ open class GameFragment : Fragment() {
             }
         }
     }
-
         return view
     }
 
@@ -60,12 +76,4 @@ open class GameFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    private fun updateScreen(){
-        binding.word.text = viewModel.secretWordDisplay
-        binding.lives.text = getString(R.string.lives_remain, viewModel.livesLeft)
-        binding.incorrectGuesses.text = getString(R.string.incorrect_guesses, viewModel.incorrectGuesses)
-    }
-
-
 }
