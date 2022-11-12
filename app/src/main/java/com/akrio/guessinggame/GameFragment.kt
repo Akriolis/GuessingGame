@@ -30,7 +30,11 @@ open class GameFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[GameViewModel::class.java]
 
-
+//        viewModel.screenState.observe(viewLifecycleOwner){
+//            binding.lives.text = getString(R.string.lives_remain, it.livesLeft)
+//            binding.word.text = it.secretWordDisplay
+//            binding.incorrectGuesses.text = getString(R.string.incorrect_guesses, it.incorrectGuesses)
+//        }
 
         viewModel.livesLeft.observe(viewLifecycleOwner, Observer { newValue ->
             binding.lives.text = getString(R.string.lives_remain, newValue)

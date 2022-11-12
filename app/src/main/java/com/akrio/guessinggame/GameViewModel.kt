@@ -13,6 +13,12 @@ class GameViewModel: ViewModel() {
     private val secretWord = words.random().uppercase()
     private var correctGuesses = ""
 
+//    private val screenStateObject = GameFragmentScreenState(secretWordDisplay = deriveSecretWordDisplay())
+//
+//    private val _screenState = MutableLiveData<GameFragmentScreenState>(screenStateObject)
+//    val screenState: LiveData<GameFragmentScreenState>
+//        get() = _screenState
+
     private val _secretWordDisplay = MutableLiveData<String>()
     val secretWordDisplay: LiveData<String>
         get() = _secretWordDisplay
@@ -53,13 +59,13 @@ class GameViewModel: ViewModel() {
             _secretWordDisplay.value = deriveSecretWordDisplay()
         } else {
             _incorrectGuesses.value += "$guess "
-            _livesLeft.value = livesLeft.value?.minus(1)
+            _livesLeft.value = _livesLeft.value?.minus(1)!!
         }
         if (isWon() || isLost()) _gameOver.value = true
     }
 
-    private fun isWon() = secretWord.equals(secretWordDisplay.value, true)
-    private fun isLost() = (livesLeft.value ?: 0) <= 0
+    private fun isWon() = secretWord.equals(_secretWordDisplay.value, true)
+    private fun isLost() = (_livesLeft.value ?: 0) <= 0
 
     fun wonLostMessage(): String{
         var message = ""
