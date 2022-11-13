@@ -75,6 +75,11 @@ open class GameFragment : Fragment() {
 
         }
     }
+        binding.finishButton.setOnClickListener {
+            viewModel.finishGame()
+        }
+
+
         return view
     }
 

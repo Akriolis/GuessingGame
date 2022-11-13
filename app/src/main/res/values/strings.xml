@@ -11,4 +11,5 @@
     <string name="one_letter">Only one letter allowed!</string>
     <string name="start_new_game">Start new game!</string>
     <string name="already_guessed">You already guessed this letter, make another choice</string>
+    <string name="finish_the_game">Finish the game!</string>
 </resources>

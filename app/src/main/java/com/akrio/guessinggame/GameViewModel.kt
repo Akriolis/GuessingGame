@@ -80,4 +80,8 @@ class GameViewModel: ViewModel() {
         super.onCleared()
     }
 
+    fun finishGame(){
+        _gameOver.value = true
+    }
+
 }
