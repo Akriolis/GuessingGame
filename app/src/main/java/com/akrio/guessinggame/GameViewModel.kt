@@ -14,7 +14,7 @@ class GameViewModel: ViewModel() {
     private var correctGuesses = ""
 
 //    private val screenStateObject = GameFragmentScreenState(secretWordDisplay = deriveSecretWordDisplay())
-//
+
 //    private val _screenState = MutableLiveData<GameFragmentScreenState>(screenStateObject)
 //    val screenState: LiveData<GameFragmentScreenState>
 //        get() = _screenState
